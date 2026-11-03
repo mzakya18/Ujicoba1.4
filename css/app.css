@@ -1,0 +1,420 @@
+/* Bicara PECS Hybrid v1.1 — extracted from Hybrid v1. */
+        :root {
+            --bg-color: #f0f4f8;
+            --text-color: #333;
+            --card-bg: #fff;
+            --shadow: 0 4px 6px rgba(0,0,0,0.05);
+            --border-dashed: #cbd5e1;
+            --primary: #3b82f6;
+            --header-border: #f1f5f9;
+            --card-border: #e2e8f0;
+            --sidebar-bg: #fff;
+            --overlay-bg: rgba(0,0,0,0.5);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --text-color: #f8fafc;
+            --card-bg: #1e293b;
+            --shadow: 0 4px 6px rgba(0,0,0,0.3);
+            --border-dashed: #475569;
+            --primary: #3b82f6;
+            --header-border: #334155;
+            --card-border: #334155;
+            --sidebar-bg: #1e293b;
+            --overlay-bg: rgba(255,255,255,0.1);
+        }
+
+        html, body {
+            background-color: var(--bg-color);
+            touch-action: manipulation;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            color: var(--text-color); 
+            margin: 0; 
+            padding: 0; 
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .page { display: none; padding: 15px; max-width: 800px; margin: 0 auto; min-height: 100vh; padding-bottom: 80px; box-sizing: border-box; }
+        .page.active { display: block; animation: pageIn 0.5s var(--ease-ios); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card-container { background: var(--card-bg); padding: 25px; border-radius: 15px; box-shadow: var(--shadow); margin-top: 2vh; transition: 0.3s; }
+        .center-text { text-align: center; }
+        
+        .disclaimer { font-size: 0.9rem; color: var(--text-color); background: rgba(16, 185, 129, 0.1); padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #10b981; }
+        
+        .btn-primary { background-color: var(--primary); color: white; border: none; padding: 14px 25px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; margin-top: 15px; transition: all 0.2s; box-shadow: 0 2px 4px rgba(59,130,246,0.3); }
+        .btn-primary:active { transform: scale(0.96); filter: brightness(0.9); }
+        
+        .btn-secondary { background-color: var(--card-border); color: var(--text-color); border: none; padding: 12px; border-radius: 10px; font-size: 1rem; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; transition: all 0.2s;}
+        .btn-secondary:active { transform: scale(0.96); filter: brightness(0.9); }
+
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text-color); line-height: 1.4; }
+        .form-group select, .form-group input[type="text"], .form-group input[type="password"] { width: 100%; padding: 12px; border: 2px solid var(--card-border); border-radius: 8px; font-size: 1rem; background: var(--card-bg); color: var(--text-color); box-sizing: border-box; }
+        
+        .radio-group { display: flex; flex-direction: column; gap: 10px; }
+        .radio-option { display: flex; align-items: flex-start; gap: 10px; background: var(--bg-color); padding: 12px; border-radius: 8px; border: 1px solid var(--card-border); cursor: pointer; transition: 0.2s; }
+        .radio-option input { margin-top: 4px; }
+
+        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; gap: 6px; }
+        .icon-btn { background: var(--card-bg); border: 2px solid var(--card-border); color: var(--text-color); padding: 8px 12px; border-radius: 10px; cursor: pointer; font-size: 0.9rem; font-weight: bold; box-shadow: var(--shadow); display: flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.2s;}
+        .icon-btn:active { transform: scale(0.92); }
+        .icon-btn.active-mode { background: #f59e0b; color: white; border-color: #d97706; }
+        
+        .btn-lock { background-color: #ef4444; color: white; border-color: #dc2626; }
+        .btn-lock.unlocked-style { background-color: #10b981; color: white; border-color: #059669; }
+
+        h2.app-title { text-align: center; color: var(--text-color); margin: 0; font-size: 1.3rem; flex-grow: 1; }
+
+        body.child-locked .hide-on-lock { display: none !important; }
+        body.image-only-mode .pecs-card .word { display: none !important; }
+
+        #sentence-strip { background-color: var(--card-bg); padding: 12px; border-radius: 12px; min-height: 95px; display: flex; align-items: center; gap: 10px; box-shadow: var(--shadow); margin-bottom: 15px; flex-wrap: wrap; border: 2px dashed var(--border-dashed); transition: 0.3s; }
+        .sentence-item { position: relative; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; background: var(--card-border); color: var(--text-color); padding: 8px 12px; border-radius: 10px; font-weight: bold; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; transition: 0.2s;}
+        .sentence-item:active { transform: scale(0.85); filter: brightness(0.8); }
+        @keyframes popIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .sentence-item .emoji { font-size: 38px; margin-bottom: 2px; }
+        .sentence-item .card-custom-img { width: 46px; height: 46px; object-fit: cover; border-radius: 6px; margin-bottom: 2px; }
+        .sentence-item .word { font-size: 14px; }
+        
+        .sentence-item .item-remove-btn { position: absolute; top: -6px; right: -6px; background: #ef4444; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 13px; font-weight: bold; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+
+        .category { margin-bottom: 25px; transition: all 0.3s ease; }
+        .category-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 2px solid var(--card-border); padding-bottom: 6px; }
+        .category-header h3 { margin: 0; color: var(--text-color); font-size: 1.15rem; display: flex; align-items: center; gap: 8px; }
+        
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+        .category.collapsed .grid { display: none; }
+
+        .pecs-card { font-family: inherit; background-color: var(--card-bg); border: 3px solid var(--card-border); border-radius: 16px; padding: 14px 8px; text-align: center; cursor: pointer; font-weight: bold; font-size: 16px; color: #1e293b; display: flex; flex-direction: column; align-items: center; justify-content: center; aspect-ratio: 1/1; position: relative; transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.2s ease; box-sizing: border-box; }
+        .pecs-card:active { transform: scale(0.92); filter: brightness(0.7) contrast(1.2); }
+        .pecs-card.card-active-flash { box-shadow: 0 0 0 6px #10b981 !important; transform: scale(0.95); }
+        .pecs-card .emoji { font-size: 58px; display: block; margin: 0 auto 6px; line-height: 1; }
+        .pecs-card .card-custom-img { width: 68px; height: 68px; object-fit: cover; border-radius: 12px; margin-bottom: 6px; }
+
+        .subjek { background-color: #fef08a; border-color: #fde047; }
+        .kata-kerja { background-color: #bbf7d0; border-color: #86efac; }
+        .benda { background-color: #fed7aa; border-color: #fdba74; }
+        .sifat { background-color: #bae6fd; border-color: #7dd3fc; }
+        .tempat { background-color: #ddd6fe; border-color: #c4b5fd; }
+        .waktu { background-color: #e5e5e5; border-color: #d4d4d4; }
+        .perasaan { background-color: #fbcfe8; border-color: #f9a8d4; }
+        [data-theme="dark"] .pecs-card { color: #0f172a; } 
+
+        .controls { display: flex; gap: 10px; margin-bottom: 20px; }
+        .controls button { padding: 14px; font-size: 16px; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; transition: 0.2s;}
+        .controls button:active { transform: scale(0.95); }
+        .btn-speak { background-color: var(--primary); color: white; flex: 2 !important; }
+        .btn-clear { background-color: #ef4444; color: white; }
+
+
+        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--overlay-bg); z-index: 99; backdrop-filter: blur(2px); }
+        .sidebar { position: fixed; top: 0; left: -300px; width: 280px; height: 100%; background: var(--sidebar-bg); z-index: 100; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 2px 0 10px rgba(0,0,0,0.2); overflow-y: auto; padding: 20px; box-sizing: border-box; }
+        .sidebar.open { left: 0; }
+        .sidebar h3 { margin-top: 0; border-bottom: 2px solid var(--header-border); padding-bottom: 10px; color: var(--text-color); }
+        .sidebar-menu { list-style: none; padding: 0; margin: 0; }
+        .sidebar-menu li { padding: 14px 0; border-bottom: 1px solid var(--header-border); cursor: pointer; color: var(--text-color); font-weight: 500; display: flex; align-items: center; justify-content: space-between; gap: 10px; transition: 0.2s;}
+        .sidebar-menu li:active { opacity: 0.5; }
+        .close-sidebar { position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color); }
+
+        .history-item { display: flex; align-items: center; justify-content: space-between; padding: 10px; border-bottom: 1px solid var(--card-border); }
+        .history-item .word { font-weight: bold; }
+        .history-item .time { font-size: 0.8rem; color: #64748b; }
+
+        .theme-selector { margin-top: 20px; padding: 10px; background: rgba(59,130,246,0.1); border-radius: 8px; }
+        .theme-selector select { width: 100%; padding: 8px; border-radius: 5px; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-color); margin-top: 5px; }
+
+        #btn-scroll-top { display: none; position: fixed; bottom: 20px; right: 20px; width: 48px; height: 48px; background-color: var(--primary); color: white; border: none; border-radius: 50%; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 90; transition: all 0.3s ease; }
+        #btn-scroll-top:active { transform: scale(0.9); }
+
+        .modal { 
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0, 0, 0, 0.6); 
+            backdrop-filter: blur(6px); 
+            -webkit-backdrop-filter: blur(6px); 
+            z-index: 105; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 15px; 
+            box-sizing: border-box; 
+            touch-action: none; 
+        }
+        .modal.open { display: flex; }
+        .modal-content { 
+            background: var(--card-bg); 
+            width: 100%; 
+            max-width: 450px; 
+            border-radius: 15px; 
+            padding: 20px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
+            box-sizing: border-box; 
+            max-height: 90vh; 
+            overflow-y: auto; 
+            touch-action: auto; 
+        }
+        
+        .cat-chip { background: var(--card-border); color: var(--text-color); padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; border: 1px solid var(--border-dashed); font-weight: bold; }
+        .cat-chip:hover { background: var(--primary); color: white; }
+
+        #lock-screen-modal {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .lock-card {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 380px;
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            text-align: center;
+            border: 2px solid var(--card-border);
+        }
+
+        .lock-input {
+            width: 100%;
+            padding: 14px;
+            font-size: 1.1rem;
+            border: 2px solid var(--card-border);
+            border-radius: 10px;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            text-align: center;
+            box-sizing: border-box;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* ===== Sakelar (toggle) ===== */
+        .switch { position: relative; display: inline-block; width: 46px; height: 28px; flex-shrink: 0; }
+        .switch input { opacity: 0; width: 0; height: 0; position: absolute; margin: 0; }
+        .switch .slider { position: absolute; inset: 0; background: #cbd5e1; border-radius: 999px; transition: background-color 0.35s cubic-bezier(0.32, 0.72, 0, 1); cursor: pointer; }
+        .switch .slider::before { content: ""; position: absolute; width: 22px; height: 22px; left: 3px; top: 3px; background: #fff; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.25); transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1); }
+        .switch input:checked + .slider { background: #10b981; }
+        .switch input:checked + .slider::before { transform: translateX(18px); }
+        .switch input:focus-visible + .slider { outline: 3px solid var(--primary); outline-offset: 2px; }
+        .menu-switch-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 0; font-weight: 600; color: var(--text-color); }
+        .cat-switch-wrap { display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-color); cursor: pointer; }
+        .sidebar-menu li.menu-switch-row { cursor: default; }
+
+        /* ===== Ikon edit (⚙️) pada kartu ===== */
+        .pecs-card { position: relative; }
+        .card-gear { display: none; position: absolute; top: 6px; right: 6px; z-index: 5; width: 34px; height: 34px; border-radius: 50%; border: none; background: rgba(15,23,42,0.78); color: #fff; font-size: 17px; line-height: 34px; text-align: center; padding: 0; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.25); }
+        .is-edit-mode .card-gear { display: block; }
+        .card-gear:active { transform: scale(0.9); }
+
+        /* ===== Pop-up edit kartu ===== */
+        .ed-preview { width: 150px; margin: 0 auto 14px; pointer-events: none; cursor: default; }
+        body.image-only-mode #ed-preview .word { display: block !important; }
+        .ed-img-actions { display: flex; flex-direction: column; gap: 8px; }
+        .ed-img-actions .btn-secondary { margin-top: 0; }
+        .ed-results { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; max-height: 180px; overflow-y: auto; }
+        .ed-result { background: var(--bg-color); border: 2px solid var(--card-border); border-radius: 10px; padding: 4px; cursor: pointer; }
+        .ed-result img { width: 100%; display: block; }
+        .ed-hint { grid-column: 1 / -1; font-size: 0.85rem; color: #64748b; text-align: center; margin: 8px 0; }
+        .ed-delete { color: #ef4444 !important; }
+
+        /* ===== Tema Glass ===== */
+        html.glass-theme { --card-bg: rgba(255,255,255,0.55); --sidebar-bg: rgba(255,255,255,0.62); --card-border: rgba(148,163,184,0.45); }
+        html.glass-theme[data-theme="dark"] { --card-bg: rgba(30,41,59,0.55); --sidebar-bg: rgba(30,41,59,0.65); --card-border: rgba(148,163,184,0.3); }
+        html.glass-theme body {
+            background-image:
+                radial-gradient(circle at 12% 8%, rgba(59,130,246,0.16), transparent 42%),
+                radial-gradient(circle at 88% 28%, rgba(16,185,129,0.13), transparent 40%),
+                radial-gradient(circle at 50% 92%, rgba(245,158,11,0.12), transparent 45%);
+            background-attachment: fixed;
+        }
+        html.glass-theme .card-container,
+        html.glass-theme .modal-content,
+        html.glass-theme .lock-card,
+        html.glass-theme .sidebar,
+        html.glass-theme #sentence-strip,
+        html.glass-theme .icon-btn,
+        html.glass-theme .btn-secondary,
+        html.glass-theme .top-bar .icon-btn {
+            -webkit-backdrop-filter: blur(20px) saturate(170%);
+            backdrop-filter: blur(20px) saturate(170%);
+            border-color: rgba(255,255,255,0.55);
+        }
+        html.glass-theme .modal { -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+        html.glass-theme .pecs-card {
+            background-color: color-mix(in srgb, var(--tint, #ffffff) 62%, transparent);
+            -webkit-backdrop-filter: blur(14px) saturate(170%);
+            backdrop-filter: blur(14px) saturate(170%);
+            border-color: rgba(255,255,255,0.6);
+            box-shadow: 0 8px 22px rgba(15,23,42,0.10), inset 0 1px 0 rgba(255,255,255,0.6);
+        }
+        html.glass-theme .pecs-card.subjek { --tint: #fef08a; }
+        html.glass-theme .pecs-card.kata-kerja { --tint: #bbf7d0; }
+        html.glass-theme .pecs-card.benda { --tint: #fed7aa; }
+        html.glass-theme .pecs-card.sifat { --tint: #bae6fd; }
+        html.glass-theme .pecs-card.tempat { --tint: #ddd6fe; }
+        html.glass-theme .pecs-card.waktu { --tint: #e5e5e5; }
+        html.glass-theme .pecs-card.perasaan { --tint: #fbcfe8; }
+
+        /* ===== Animasi halus ala iOS ===== */
+        :root { --ease-ios: cubic-bezier(0.32, 0.72, 0, 1); --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1); }
+        @keyframes pageIn { from { opacity: 0; transform: translate3d(0, 14px, 0); } to { opacity: 1; transform: none; } }
+        body { transition: background-color 0.45s var(--ease-ios), color 0.45s var(--ease-ios); }
+        .btn-primary, .btn-secondary, .icon-btn, .controls button, .card-gear, .btn-card-action {
+            transition: transform 0.25s var(--ease-ios), filter 0.25s var(--ease-ios), background-color 0.3s var(--ease-ios), box-shadow 0.3s var(--ease-ios);
+        }
+        .pecs-card { transition: transform 0.35s var(--ease-ios), box-shadow 0.35s var(--ease-ios), background-color 0.45s var(--ease-ios), filter 0.25s var(--ease-ios); -webkit-tap-highlight-color: transparent; }
+        .pecs-card:active { transition-duration: 0.12s; }
+        .category { transition: opacity 0.35s var(--ease-ios), transform 0.45s var(--ease-ios); }
+        .category.collapsed .grid { display: none; }
+        .sentence-item { animation: popIn 0.45s var(--ease-spring) both; }
+
+        /* Sidebar meluncur seperti iOS */
+        .sidebar { left: 0 !important; transform: translate3d(-105%, 0, 0); transition: transform 0.5s var(--ease-ios), box-shadow 0.5s var(--ease-ios) !important; }
+        .sidebar.open { transform: translate3d(0, 0, 0); }
+        .overlay { display: block !important; opacity: 0; pointer-events: none; transition: opacity 0.45s var(--ease-ios); }
+        .overlay.show { opacity: 1; pointer-events: auto; }
+
+        /* Modal: fade + naik perlahan */
+        .modal { display: flex !important; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.35s var(--ease-ios), visibility 0.35s; }
+        .modal.open { opacity: 1; visibility: visible; pointer-events: auto; }
+        .modal .modal-content { transform: translate3d(0, 28px, 0) scale(0.96); opacity: 0; transition: transform 0.5s var(--ease-ios), opacity 0.35s var(--ease-ios); }
+        .modal.open .modal-content { transform: none; opacity: 1; }
+
+        /* Layar kunci */
+        #lock-screen-modal { transition: opacity 0.4s var(--ease-ios); }
+        .lock-card { animation: pageIn 0.5s var(--ease-ios) both; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+        }
+
+        /* ===== Cadangan & pengingat ===== */
+        .backup-hint { font-size: 0.95rem; line-height: 1.6; color: var(--text-color); background: rgba(59,130,246,0.08); border-left: 4px solid var(--primary); padding: 12px 14px; border-radius: 8px; margin: 12px 0 4px; }
+        .reminder-icon { font-size: 3rem; margin: 0; }
+        .modal.top-layer { z-index: 100000; }
+        .lock-gear { position: absolute; top: 14px; right: 14px; width: 42px; height: 42px; border-radius: 50%; border: none; background: rgba(15,23,42,0.08); font-size: 20px; cursor: pointer; transition: transform 0.25s var(--ease-ios), background-color 0.25s; }
+        .lock-gear:active { transform: scale(0.9); background: rgba(15,23,42,0.18); }
+        /* ===== Perbaikan tata letak: kolom tidak melebar, teks tidak tertutup ===== */
+        .page { max-width: 100%; overflow-x: clip; }
+        .category { min-width: 0; }
+        .category-header { flex-wrap: wrap; gap: 8px; }
+        .category-header h3 { min-width: 0; flex: 1 1 auto; flex-wrap: wrap; line-height: 1.3; overflow-wrap: anywhere; }
+        .cat-switch-wrap { flex-shrink: 0; }
+        .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .pecs-card { min-width: 0; width: 100%; box-sizing: border-box; overflow: hidden; padding: 12px 6px; }
+        .pecs-card .word { display: block; max-width: 100%; overflow-wrap: anywhere; line-height: 1.2; font-size: 15px; }
+        .pecs-card .emoji { max-width: 100%; }
+        .pecs-card .card-custom-img { max-width: 100%; height: auto; }
+        /* ===== Perbaikan gulir pada aplikasi terpasang (iOS standalone) =====
+           Elemen tertutup dihapus dari layout agar tidak menangkap sentuhan gulir. */
+        .modal { display: none !important; touch-action: auto; }
+        .modal.open { display: flex !important; animation: fadeOverlay 0.3s var(--ease-ios) both; }
+        .modal.open .modal-content { animation: riseModal 0.5s var(--ease-ios) both; }
+        .overlay { display: none !important; }
+        .overlay.show { display: block !important; animation: fadeOverlay 0.35s var(--ease-ios) both; }
+        @keyframes fadeOverlay { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes riseModal { from { opacity: 0; transform: translate3d(0, 28px, 0) scale(0.96); } to { opacity: 1; transform: none; } }
+        .overlay.show { opacity: 1; pointer-events: auto; }
+        #page-main { min-height: 100vh; position: relative; }
+        html { height: auto; }
+
+        /* Bicara PECS Hybrid: Card Generator */
+        .generator-toolbar { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+        .generator-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:12px; }
+        .generator-option { display:flex; align-items:center; gap:8px; padding:9px; border:1px solid var(--card-border); border-radius:10px; background:var(--bg-color); min-width:0; }
+        .generator-option img { width:42px; height:42px; object-fit:contain; background:white; border-radius:6px; }
+        .generator-option .gen-emoji { width:42px; height:42px; display:grid; place-items:center; font-size:28px; background:white; border-radius:6px; flex:none; }
+        .generator-option span { overflow-wrap:anywhere; font-size:.9rem; }
+        .generator-actions { display:flex; gap:8px; flex-wrap:wrap; }
+        .generator-actions button { flex:1; min-width:120px; }
+        #generator-print-area { display:none; }
+        @media print {
+            @page { size:A4; margin:10mm; }
+            body { background:#fff !important; color:#111 !important; }
+            body * { visibility:hidden !important; }
+            #generator-print-area, #generator-print-area * { visibility:visible !important; }
+            #generator-print-area { display:block !important; position:absolute; left:0; top:0; width:100%; }
+            .print-card-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:5mm; }
+            .print-card { height:42mm; border:1.5px solid #222; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:3mm; box-sizing:border-box; break-inside:avoid; }
+            .print-card img { width:25mm; height:25mm; object-fit:contain; }
+            .print-card .print-emoji { font-size:25mm; line-height:1.1; }
+            .print-card strong { font-size:11pt; margin-top:2mm; }
+            .print-heading { text-align:center; margin:0 0 6mm; font-size:16pt; }
+        }
+        @media (max-width:420px) { .generator-list { grid-template-columns:1fr; } .generator-toolbar { grid-template-columns:1fr; } }
+
+    
+
+/* ===== v1.3: area gambar & label konsisten (gambar tidak terpotong, label selalu terbaca) ===== */
+.pecs-card .card-image-container,
+.pecs-card .emoji,
+.pecs-card .card-custom-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.pecs-card .emoji {
+    width: 100%;
+    height: 72px;
+    margin: 0 auto 6px;
+    font-size: 58px;
+    line-height: 1;
+}
+.pecs-card .card-custom-img {
+    display: block;
+    width: 72px;
+    height: 72px;
+    max-width: 100%;
+    margin: 0 auto 6px;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 10px;
+}
+.pecs-card .word {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.6em;
+    text-align: center;
+    overflow-wrap: anywhere;
+    line-height: 1.2;
+    font-size: 15px;
+}
+
+/* ===== v1.4: label kartu tidak terpotong di HP (kartu menyesuaikan isi) ===== */
+@media (max-width: 600px) {
+    .pecs-card {
+        aspect-ratio: auto !important;
+        min-height: 128px;
+        height: auto;
+        overflow: visible !important;
+        justify-content: flex-start;
+        padding: 10px 6px 12px;
+    }
+    .pecs-card .word {
+        min-height: 2.5em;
+        overflow-wrap: anywhere;
+        hyphens: auto;
+    }
+}
